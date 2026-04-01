@@ -2,142 +2,88 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  static const Color gold = Color(0xFFD4AF37);
-  static const Color goldLight = Color(0xFFE8D08A);
-  static const Color goldDark = Color(0xFFA8832A);
-  static const Color black = Color(0xFFF5F0E8);
-  static const Color darkSurface = Color(0xFFF5F0E8);
-  static const Color darkCard = Color(0xFFF0EAD6);
-  static const Color darkBorder = Color(0xFF2A2A2A);
-  static const Color cream = Color(0xFF141414);
-  static const Color textPrimary = Color(0xFF1C1C1C);
-  static const Color textSecondary = Color(0xFF8A8070);
-  static const Color error = Color(0xFFB04040);
-  static const Color success = Color(0xFF3A7A5A);
+  // ── Palette ──────────────────────────────────────────────────────────────
+  static const Color bg        = Color(0xFF0F1923);
+  static const Color surface   = Color(0xFF1A2433);
+  static const Color card      = Color(0xFF1E2A3B);
+  static const Color cardAlt   = Color(0xFF243044);
+  static const Color border    = Color(0xFF2A3A50);
+  static const Color primary   = Color(0xFFFF6B35);
+  static const Color primaryDk = Color(0xFFD94F1A);
+  static const Color gold      = Color(0xFFD4AF37);
+  static const Color goldLight = Color(0xFFE8CC6A);
+  static const Color white     = Color(0xFFFFFFFF);
+  static const Color text1     = Color(0xFFF0F4F8);
+  static const Color text2     = Color(0xFF8FA3BC);
+  static const Color text3     = Color(0xFF4A6380);
+  static const Color success   = Color(0xFF22C55E);
+  static const Color error     = Color(0xFFEF4444);
+  static const Color warning   = Color(0xFFF59E0B);
+  static const Color star      = Color(0xFFFBBF24);
 
-  static ThemeData get darkTheme => ThemeData(
+  static ThemeData get dark => ThemeData(
     brightness: Brightness.dark,
-    scaffoldBackgroundColor: black,
+    scaffoldBackgroundColor: bg,
     colorScheme: const ColorScheme.dark(
-      primary: gold,
-      secondary: goldLight,
-      surface: darkSurface,
+      primary: primary,
+      secondary: gold,
+      surface: surface,
       error: error,
-      onPrimary: black,
-      onSecondary: black,
-      onSurface: textPrimary,
+      onPrimary: white,
+      onSecondary: bg,
+      onSurface: text1,
     ),
-    textTheme: TextTheme(
-      displayLarge: GoogleFonts.cormorantGaramond(
-        fontSize: 48,
-        fontWeight: FontWeight.w300,
-        color: gold,
-        letterSpacing: 2,
-      ),
-      displayMedium: GoogleFonts.cormorantGaramond(
-        fontSize: 36,
-        fontWeight: FontWeight.w300,
-        color: textPrimary,
-        letterSpacing: 1.5,
-      ),
-      displaySmall: GoogleFonts.cormorantGaramond(
-        fontSize: 28,
-        fontWeight: FontWeight.w400,
-        color: textPrimary,
-        letterSpacing: 1,
-      ),
-      headlineLarge: GoogleFonts.cormorantGaramond(
-        fontSize: 24,
-        fontWeight: FontWeight.w500,
-        color: textPrimary,
-        letterSpacing: 0.5,
-      ),
-      headlineMedium: GoogleFonts.cormorantGaramond(
-        fontSize: 20,
-        fontWeight: FontWeight.w500,
-        color: textPrimary,
-      ),
-      titleLarge: GoogleFonts.montserrat(
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
-        color: textPrimary,
-        letterSpacing: 1.2,
-      ),
-      titleMedium: GoogleFonts.montserrat(
-        fontSize: 14,
-        fontWeight: FontWeight.w500,
-        color: textPrimary,
-        letterSpacing: 0.8,
-      ),
-      bodyLarge: GoogleFonts.montserrat(
-        fontSize: 16,
-        fontWeight: FontWeight.w400,
-        color: textPrimary,
-      ),
-      bodyMedium: GoogleFonts.montserrat(
-        fontSize: 14,
-        fontWeight: FontWeight.w400,
-        color: textSecondary,
-      ),
-      labelLarge: GoogleFonts.montserrat(
-        fontSize: 12,
-        fontWeight: FontWeight.w600,
-        color: gold,
-        letterSpacing: 2,
-      ),
-    ),
+    textTheme: _textTheme,
     appBarTheme: AppBarTheme(
-      backgroundColor: Colors.transparent,
+      backgroundColor: bg,
       elevation: 0,
       centerTitle: true,
-      titleTextStyle: GoogleFonts.cormorantGaramond(
-        fontSize: 22,
-        fontWeight: FontWeight.w500,
-        color: gold,
-        letterSpacing: 2,
-      ),
-      iconTheme: const IconThemeData(color: gold),
+      titleTextStyle: GoogleFonts.dmSans(
+        fontSize: 18, fontWeight: FontWeight.w600, color: text1),
+      iconTheme: const IconThemeData(color: text1),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: darkCard,
+      fillColor: surface,
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(4),
-        borderSide: const BorderSide(color: darkBorder),
-      ),
+        borderRadius: BorderRadius.circular(14),
+        borderSide: const BorderSide(color: border)),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(4),
-        borderSide: const BorderSide(color: darkBorder),
-      ),
+        borderRadius: BorderRadius.circular(14),
+        borderSide: const BorderSide(color: border)),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(4),
-        borderSide: const BorderSide(color: gold, width: 1.5),
-      ),
-      labelStyle: GoogleFonts.montserrat(color: textSecondary, fontSize: 12),
-      hintStyle: GoogleFonts.montserrat(color: textSecondary, fontSize: 14),
+        borderRadius: BorderRadius.circular(14),
+        borderSide: const BorderSide(color: primary, width: 1.5)),
+      hintStyle: GoogleFonts.dmSans(color: text3, fontSize: 14),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: gold,
-        foregroundColor: black,
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 18),
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-        textStyle: GoogleFonts.montserrat(
-          fontSize: 12,
-          fontWeight: FontWeight.w700,
-          letterSpacing: 2,
-        ),
+        backgroundColor: primary,
+        foregroundColor: white,
+        minimumSize: const Size(double.infinity, 54),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+        textStyle: GoogleFonts.dmSans(fontSize: 16, fontWeight: FontWeight.w700),
       ),
     ),
-    dividerTheme: const DividerThemeData(color: darkBorder, thickness: 1),
-    chipTheme: ChipThemeData(
-      backgroundColor: darkCard,
-      selectedColor: gold,
-      labelStyle: GoogleFonts.montserrat(fontSize: 12, color: textPrimary),
-      side: const BorderSide(color: darkBorder),
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: surface,
+      selectedItemColor: primary,
+      unselectedItemColor: text3,
+      type: BottomNavigationBarType.fixed,
+      elevation: 0,
     ),
   );
+
+  static TextTheme get _textTheme => TextTheme(
+    displayLarge: GoogleFonts.playfairDisplay(fontSize: 36, fontWeight: FontWeight.w700, color: text1),
+    displayMedium: GoogleFonts.playfairDisplay(fontSize: 28, fontWeight: FontWeight.w700, color: text1),
+    displaySmall: GoogleFonts.playfairDisplay(fontSize: 22, fontWeight: FontWeight.w600, color: text1),
+    headlineLarge: GoogleFonts.dmSans(fontSize: 22, fontWeight: FontWeight.w700, color: text1),
+    headlineMedium: GoogleFonts.dmSans(fontSize: 18, fontWeight: FontWeight.w600, color: text1),
+    titleLarge: GoogleFonts.dmSans(fontSize: 16, fontWeight: FontWeight.w600, color: text1),
+    titleMedium: GoogleFonts.dmSans(fontSize: 14, fontWeight: FontWeight.w600, color: text1),
+    bodyLarge: GoogleFonts.dmSans(fontSize: 16, fontWeight: FontWeight.w400, color: text1),
+    bodyMedium: GoogleFonts.dmSans(fontSize: 14, fontWeight: FontWeight.w400, color: text2),
+    labelLarge: GoogleFonts.dmSans(fontSize: 12, fontWeight: FontWeight.w700, color: text1, letterSpacing: 0.5),
+  );
 }
-
-
