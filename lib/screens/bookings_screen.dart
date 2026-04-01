@@ -6,6 +6,7 @@ import '../blocs/app_bloc.dart';
 import '../models/booking.dart';
 import '../theme/app_theme.dart';
 import '../widgets/common.dart';
+import 'get_direction_screen.dart';
 
 class BookingsScreen extends StatelessWidget {
   const BookingsScreen({super.key});
@@ -32,11 +33,11 @@ class BookingsScreen extends StatelessWidget {
         ),
       ),
       body: BlocBuilder<AppBloc, AppState>(builder: (context, state) =>
-        TabBarView(children: [
-          _BookingList(bookings: state.activeBookings, status: BookingStatus.active),
-          _BookingList(bookings: state.completedBookings, status: BookingStatus.completed),
-          _BookingList(bookings: state.cancelledBookings, status: BookingStatus.cancelled),
-        ]),
+          TabBarView(children: [
+            _BookingList(bookings: state.activeBookings, status: BookingStatus.active),
+            _BookingList(bookings: state.completedBookings, status: BookingStatus.completed),
+            _BookingList(bookings: state.cancelledBookings, status: BookingStatus.cancelled),
+          ]),
       ),
     ));
   }
@@ -77,8 +78,8 @@ class _BookingCard extends StatelessWidget {
   Color get _statusColor => booking.status == BookingStatus.active
       ? AppTheme.success
       : booking.status == BookingStatus.completed
-          ? AppTheme.primary
-          : AppTheme.error;
+      ? AppTheme.primary
+      : AppTheme.error;
 
   String get _statusLabel => booking.status.name[0].toUpperCase() + booking.status.name.substring(1);
 
@@ -92,18 +93,18 @@ class _BookingCard extends StatelessWidget {
         Stack(children: [
           SizedBox(height: 130, width: double.infinity, child: NetImg(booking.restaurantImage)),
           Container(height: 130, decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter, end: Alignment.bottomCenter,
-              colors: [Colors.transparent, Colors.black.withOpacity(0.7)]))),
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter, end: Alignment.bottomCenter,
+                  colors: [Colors.transparent, Colors.black.withOpacity(0.7)]))),
           Positioned(top: 10, right: 10,
-            child: StatusBadge(label: _statusLabel, color: _statusColor)),
+              child: StatusBadge(label: _statusLabel, color: _statusColor)),
           Positioned(bottom: 12, left: 14, child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(booking.restaurantName, style: GoogleFonts.playfairDisplay(
-                  fontSize: 17, fontWeight: FontWeight.w700, color: AppTheme.white)),
-              Text(booking.tableType, style: GoogleFonts.dmSans(
-                  fontSize: 12, color: AppTheme.text2)),
-            ])),
+              crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(booking.restaurantName, style: GoogleFonts.playfairDisplay(
+                fontSize: 17, fontWeight: FontWeight.w700, color: AppTheme.white)),
+            Text(booking.tableType, style: GoogleFonts.dmSans(
+                fontSize: 12, color: AppTheme.text2)),
+          ])),
         ]),
         // Details
         Padding(padding: const EdgeInsets.all(14), child: Column(children: [
@@ -121,22 +122,27 @@ class _BookingCard extends StatelessWidget {
             const SizedBox(height: 14),
             Row(children: [
               Expanded(child: OutlinedButton(
-                onPressed: () => _showCancelDialog(context),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: AppTheme.error,
-                  side: const BorderSide(color: AppTheme.error),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  padding: const EdgeInsets.symmetric(vertical: 10)),
-                child: Text('Cancel', style: GoogleFonts.dmSans(
-                    fontSize: 13, fontWeight: FontWeight.w600)))),
+                  onPressed: () => _showCancelDialog(context),
+                  style: OutlinedButton.styleFrom(
+                      foregroundColor: AppTheme.error,
+                      side: const BorderSide(color: AppTheme.error),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      padding: const EdgeInsets.symmetric(vertical: 10)),
+                  child: Text('Cancel', style: GoogleFonts.dmSans(
+                      fontSize: 13, fontWeight: FontWeight.w600)))),
               const SizedBox(width: 10),
               Expanded(child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(0, 40),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
-                child: Text('Get Direction', style: GoogleFonts.dmSans(
-                    fontSize: 13, fontWeight: FontWeight.w600)))),
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => GetDirectionScreen(booking: booking),
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(0, 40),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+                  child: Text('Get Direction', style: GoogleFonts.dmSans(
+                      fontSize: 13, fontWeight: FontWeight.w600)))),
             ]),
           ],
         ])),
@@ -164,15 +170,15 @@ class _BookingCard extends StatelessWidget {
           style: GoogleFonts.dmSans(fontSize: 13, color: AppTheme.text2, height: 1.6)),
       actions: [
         TextButton(onPressed: () => Navigator.pop(context),
-          child: Text('Keep', style: GoogleFonts.dmSans(
-              color: AppTheme.primary, fontWeight: FontWeight.w600))),
+            child: Text('Keep', style: GoogleFonts.dmSans(
+                color: AppTheme.primary, fontWeight: FontWeight.w600))),
         TextButton(
-          onPressed: () {
-            context.read<AppBloc>().add(CancelBooking(booking.id));
-            Navigator.pop(context);
-          },
-          child: Text('Cancel Booking', style: GoogleFonts.dmSans(
-              color: AppTheme.error, fontWeight: FontWeight.w600))),
+            onPressed: () {
+              context.read<AppBloc>().add(CancelBooking(booking.id));
+              Navigator.pop(context);
+            },
+            child: Text('Cancel Booking', style: GoogleFonts.dmSans(
+                color: AppTheme.error, fontWeight: FontWeight.w600))),
       ],
     ),
   );

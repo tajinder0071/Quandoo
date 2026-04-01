@@ -1,31 +1,48 @@
 part of 'app_bloc.dart';
 
+enum AuthStatus { initial, loading, authenticated, unauthenticated, error }
+
 class AppState extends Equatable {
+  // ── Auth ──────────────────────────────────────────────────────────
+  final AuthStatus authStatus;
+  final UserModel? currentUser;
+  final String authError;
+
+  // ── Data ──────────────────────────────────────────────────────────
   final List<Restaurant> restaurants;
   final Restaurant? selectedRestaurant;
+  final List<Booking> bookings;
+  final bool isLoadingData;
+
+  // ── Booking form ──────────────────────────────────────────────────
   final DateTime? selectedDate;
   final String selectedTimeSlot;
   final int selectedGuests;
   final String selectedTableType;
   final String guestName;
   final String specialRequest;
-  final List<Booking> bookings;
   final bool isSubmitting;
   final Booking? lastBooking;
+
+  // ── UI ────────────────────────────────────────────────────────────
   final String searchQuery;
   final String selectedCuisine;
   final int currentTab;
 
   const AppState({
+    required this.authStatus,
+    this.currentUser,
+    required this.authError,
     required this.restaurants,
     this.selectedRestaurant,
+    required this.bookings,
+    required this.isLoadingData,
     this.selectedDate,
     required this.selectedTimeSlot,
     required this.selectedGuests,
     required this.selectedTableType,
     required this.guestName,
     required this.specialRequest,
-    required this.bookings,
     required this.isSubmitting,
     this.lastBooking,
     required this.searchQuery,
@@ -34,13 +51,16 @@ class AppState extends Equatable {
   });
 
   factory AppState.initial() => AppState(
+    authStatus: AuthStatus.initial,
+    authError: '',
     restaurants: sampleRestaurants,
+    bookings: [],
+    isLoadingData: false,
     selectedTimeSlot: '',
     selectedGuests: 2,
     selectedTableType: tableTypes.first,
     guestName: '',
     specialRequest: '',
-    bookings: [],
     isSubmitting: false,
     searchQuery: '',
     selectedCuisine: 'All',
@@ -48,39 +68,51 @@ class AppState extends Equatable {
   );
 
   AppState copyWith({
+    AuthStatus? authStatus,
+    UserModel? currentUser,
+    String? authError,
     List<Restaurant>? restaurants,
     Restaurant? selectedRestaurant,
+    List<Booking>? bookings,
+    bool? isLoadingData,
     DateTime? selectedDate,
     String? selectedTimeSlot,
     int? selectedGuests,
     String? selectedTableType,
     String? guestName,
     String? specialRequest,
-    List<Booking>? bookings,
     bool? isSubmitting,
     Booking? lastBooking,
     String? searchQuery,
     String? selectedCuisine,
     int? currentTab,
     bool clearDate = false,
+    bool clearUser = false,
+    bool clearLastBooking = false,
   }) => AppState(
-    restaurants: restaurants ?? this.restaurants,
+    authStatus       : authStatus   ?? this.authStatus,
+    currentUser      : clearUser    ? null : (currentUser ?? this.currentUser),
+    authError        : authError    ?? this.authError,
+    restaurants      : restaurants  ?? this.restaurants,
     selectedRestaurant: selectedRestaurant ?? this.selectedRestaurant,
-    selectedDate: clearDate ? null : (selectedDate ?? this.selectedDate),
-    selectedTimeSlot: selectedTimeSlot ?? this.selectedTimeSlot,
-    selectedGuests: selectedGuests ?? this.selectedGuests,
+    bookings         : bookings     ?? this.bookings,
+    isLoadingData    : isLoadingData ?? this.isLoadingData,
+    selectedDate     : clearDate    ? null : (selectedDate ?? this.selectedDate),
+    selectedTimeSlot : selectedTimeSlot ?? this.selectedTimeSlot,
+    selectedGuests   : selectedGuests ?? this.selectedGuests,
     selectedTableType: selectedTableType ?? this.selectedTableType,
-    guestName: guestName ?? this.guestName,
-    specialRequest: specialRequest ?? this.specialRequest,
-    bookings: bookings ?? this.bookings,
-    isSubmitting: isSubmitting ?? this.isSubmitting,
-    lastBooking: lastBooking ?? this.lastBooking,
-    searchQuery: searchQuery ?? this.searchQuery,
-    selectedCuisine: selectedCuisine ?? this.selectedCuisine,
-    currentTab: currentTab ?? this.currentTab,
+    guestName        : guestName    ?? this.guestName,
+    specialRequest   : specialRequest ?? this.specialRequest,
+    isSubmitting     : isSubmitting ?? this.isSubmitting,
+    lastBooking      : clearLastBooking ? null : (lastBooking ?? this.lastBooking),
+    searchQuery      : searchQuery  ?? this.searchQuery,
+    selectedCuisine  : selectedCuisine ?? this.selectedCuisine,
+    currentTab       : currentTab   ?? this.currentTab,
   );
 
-  List<Restaurant> get favorites => restaurants.where((r) => r.isFavorite).toList();
+  // ── Derived getters ───────────────────────────────────────────────
+  List<Restaurant> get favorites =>
+      restaurants.where((r) => r.isFavorite).toList();
 
   List<Restaurant> get filteredRestaurants {
     var list = restaurants;
@@ -105,10 +137,14 @@ class AppState extends Equatable {
   List<Booking> get cancelledBookings =>
       bookings.where((b) => b.status == BookingStatus.cancelled).toList();
 
+  bool get isAuthenticated => authStatus == AuthStatus.authenticated;
+
   @override
   List<Object?> get props => [
-    restaurants, selectedRestaurant, selectedDate, selectedTimeSlot,
-    selectedGuests, selectedTableType, guestName, specialRequest,
-    bookings, isSubmitting, lastBooking, searchQuery, selectedCuisine, currentTab,
+    authStatus, currentUser, authError,
+    restaurants, selectedRestaurant, bookings, isLoadingData,
+    selectedDate, selectedTimeSlot, selectedGuests, selectedTableType,
+    guestName, specialRequest, isSubmitting, lastBooking,
+    searchQuery, selectedCuisine, currentTab,
   ];
 }

@@ -5,6 +5,32 @@ abstract class AppEvent extends Equatable {
   @override List<Object?> get props => [];
 }
 
+// ── Auth ──────────────────────────────────────────────────────────────────────
+class LoginUser extends AppEvent {
+  final String email, password;
+  const LoginUser({required this.email, required this.password});
+  @override List<Object?> get props => [email, password];
+}
+
+class RegisterUser extends AppEvent {
+  final String name, email, password;
+  const RegisterUser({required this.name, required this.email, required this.password});
+  @override List<Object?> get props => [name, email, password];
+}
+
+class LogoutUser extends AppEvent {}
+
+/// Fired from SplashScreen — checks DB for a saved session.
+class RestoreSession extends AppEvent {}
+
+// ── DB load ───────────────────────────────────────────────────────────────────
+class LoadUserData extends AppEvent {
+  final int userId;
+  const LoadUserData(this.userId);
+  @override List<Object?> get props => [userId];
+}
+
+// ── Restaurants ───────────────────────────────────────────────────────────────
 class ToggleFavorite extends AppEvent {
   final String restaurantId;
   const ToggleFavorite(this.restaurantId);
@@ -17,6 +43,7 @@ class SelectRestaurant extends AppEvent {
   @override List<Object?> get props => [restaurant];
 }
 
+// ── Booking form ──────────────────────────────────────────────────────────────
 class SelectDate extends AppEvent {
   final DateTime date;
   const SelectDate(this.date);
@@ -61,6 +88,7 @@ class CancelBooking extends AppEvent {
   @override List<Object?> get props => [bookingId];
 }
 
+// ── UI ────────────────────────────────────────────────────────────────────────
 class SetSearchQuery extends AppEvent {
   final String query;
   const SetSearchQuery(this.query);
