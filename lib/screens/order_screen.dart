@@ -32,6 +32,9 @@ class _OrderScreenState extends State<OrderScreen>
   static const _categories = ['All', 'Starters', 'Mains', 'Desserts', 'Drinks'];
   int _selectedCat = 0;
 
+  // Delivery address
+  String _deliveryAddress = '42 Maple Street, Downtown';
+
   @override
   void initState() {
     super.initState();
@@ -57,8 +60,9 @@ class _OrderScreenState extends State<OrderScreen>
     final key = menuItem.name as String;
     setState(() {
       if (_cart.containsKey(key)) {
-        _cart[key] = _cart[key]!
-            .copyWith(quantity: _cart[key]!.quantity + 1);
+        _cart[key] = _cart[key]!.copyWith(
+          quantity: _cart[key]!.quantity + 1,
+        );
       } else {
         _cart[key] = CartItem(
           menuItemId: key,
@@ -90,6 +94,116 @@ class _OrderScreenState extends State<OrderScreen>
     if (_selectedCat == 0) return menu;
     final cat = _categories[_selectedCat];
     return menu.where((m) => m.category == cat).toList();
+  }
+
+  Future<void> _changeDeliveryAddress() async {
+    final controller = TextEditingController(text: _deliveryAddress);
+
+    final result = await showModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppTheme.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.fromLTRB(
+            20,
+            20,
+            20,
+            20 + MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Delivery Address',
+                style: GoogleFonts.dmSans(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: AppTheme.text1,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Enter the address where you want your order delivered.',
+                style: GoogleFonts.dmSans(
+                  fontSize: 13,
+                  color: AppTheme.text3,
+                ),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: controller,
+                maxLines: 3,
+                style: GoogleFonts.dmSans(
+                  fontSize: 14,
+                  color: AppTheme.text1,
+                ),
+                decoration: InputDecoration(
+                  hintText: 'e.g. House no. 12, Raj Nagar, Ghaziabad',
+                  hintStyle: GoogleFonts.dmSans(color: AppTheme.text3),
+                  filled: true,
+                  fillColor: AppTheme.card,
+                  contentPadding: const EdgeInsets.all(16),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14),
+                    borderSide: const BorderSide(color: AppTheme.border),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14),
+                    borderSide: const BorderSide(color: AppTheme.border),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14),
+                    borderSide: const BorderSide(
+                      color: AppTheme.primary,
+                      width: 1.5,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 18),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    final newAddress = controller.text.trim();
+                    if (newAddress.isNotEmpty) {
+                      Navigator.pop(context, newAddress);
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.primary,
+                    foregroundColor: AppTheme.white,
+                    elevation: 0,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                  child: Text(
+                    'Save Address',
+                    style: GoogleFonts.dmSans(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    if (result != null && result.isNotEmpty) {
+      setState(() {
+        _deliveryAddress = result;
+      });
+    }
   }
 
   @override
@@ -152,8 +266,11 @@ class _OrderScreenState extends State<OrderScreen>
                         const SizedBox(height: 4),
                         Row(
                           children: [
-                            const Icon(Icons.star_rounded,
-                                size: 13, color: AppTheme.star),
+                            const Icon(
+                              Icons.star_rounded,
+                              size: 13,
+                              color: AppTheme.star,
+                            ),
                             const SizedBox(width: 4),
                             Text(
                               r.rating.toStringAsFixed(1),
@@ -164,8 +281,11 @@ class _OrderScreenState extends State<OrderScreen>
                               ),
                             ),
                             const SizedBox(width: 12),
-                            const Icon(Icons.location_on_outlined,
-                                size: 13, color: AppTheme.text2),
+                            const Icon(
+                              Icons.location_on_outlined,
+                              size: 13,
+                              color: AppTheme.text2,
+                            ),
                             Text(
                               ' ${r.distance} km',
                               style: GoogleFonts.dmSans(
@@ -199,7 +319,10 @@ class _OrderScreenState extends State<OrderScreen>
             child: AnimatedSize(
               duration: const Duration(milliseconds: 250),
               child: _orderType == OrderType.delivery
-                  ? const _DeliveryInfoStrip()
+                  ? _DeliveryInfoStrip(
+                address: _deliveryAddress,
+                onChangeTap: _changeDeliveryAddress,
+              )
                   : _TakeawayInfoStrip(restaurant: r),
             ),
           ),
@@ -279,6 +402,7 @@ class _OrderScreenState extends State<OrderScreen>
                   cart: Map.from(_cart),
                   orderType: _orderType,
                   restaurant: r,
+                  deliveryAddress: _deliveryAddress,
                 ),
               ),
             ),
@@ -294,7 +418,11 @@ class _OrderScreenState extends State<OrderScreen>
 class _OrderTypeToggle extends StatelessWidget {
   final OrderType selected;
   final ValueChanged<OrderType> onChanged;
-  const _OrderTypeToggle({required this.selected, required this.onChanged});
+
+  const _OrderTypeToggle({
+    required this.selected,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) => Container(
@@ -307,8 +435,16 @@ class _OrderTypeToggle extends StatelessWidget {
     padding: const EdgeInsets.all(4),
     child: Row(
       children: [
-        _toggle(OrderType.delivery, Icons.delivery_dining_rounded, 'Delivery'),
-        _toggle(OrderType.takeaway, Icons.storefront_rounded, 'Takeaway'),
+        _toggle(
+          OrderType.delivery,
+          Icons.delivery_dining_rounded,
+          'Delivery',
+        ),
+        _toggle(
+          OrderType.takeaway,
+          Icons.storefront_rounded,
+          'Takeaway',
+        ),
       ],
     ),
   );
@@ -328,9 +464,11 @@ class _OrderTypeToggle extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon,
-                  size: 16,
-                  color: active ? AppTheme.white : AppTheme.text3),
+              Icon(
+                icon,
+                size: 16,
+                color: active ? AppTheme.white : AppTheme.text3,
+              ),
               const SizedBox(width: 6),
               Text(
                 label,
@@ -350,7 +488,13 @@ class _OrderTypeToggle extends StatelessWidget {
 
 // ── Delivery info strip ───────────────────────────────────────────────────────
 class _DeliveryInfoStrip extends StatelessWidget {
-  const _DeliveryInfoStrip();
+  final String address;
+  final VoidCallback onChangeTap;
+
+  const _DeliveryInfoStrip({
+    required this.address,
+    required this.onChangeTap,
+  });
 
   @override
   Widget build(BuildContext context) => Container(
@@ -363,24 +507,32 @@ class _DeliveryInfoStrip extends StatelessWidget {
     ),
     child: Row(
       children: [
-        const Icon(Icons.location_on_rounded,
-            size: 16, color: AppTheme.primary),
+        const Icon(
+          Icons.location_on_rounded,
+          size: 16,
+          color: AppTheme.primary,
+        ),
         const SizedBox(width: 8),
         Expanded(
           child: Text(
-            'Delivering to: 42 Maple Street, Downtown',
+            'Delivering to: $address',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: GoogleFonts.dmSans(
               fontSize: 12,
               color: AppTheme.text2,
             ),
           ),
         ),
-        Text(
-          'Change',
-          style: GoogleFonts.dmSans(
-            fontSize: 12,
-            fontWeight: FontWeight.w700,
-            color: AppTheme.primary,
+        GestureDetector(
+          onTap: onChangeTap,
+          child: Text(
+            'Change',
+            style: GoogleFonts.dmSans(
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              color: AppTheme.primary,
+            ),
           ),
         ),
       ],
@@ -391,6 +543,7 @@ class _DeliveryInfoStrip extends StatelessWidget {
 // ── Takeaway info strip ───────────────────────────────────────────────────────
 class _TakeawayInfoStrip extends StatelessWidget {
   final dynamic restaurant;
+
   const _TakeawayInfoStrip({required this.restaurant});
 
   @override
@@ -404,8 +557,11 @@ class _TakeawayInfoStrip extends StatelessWidget {
     ),
     child: Row(
       children: [
-        const Icon(Icons.storefront_rounded,
-            size: 16, color: AppTheme.success),
+        const Icon(
+          Icons.storefront_rounded,
+          size: 16,
+          color: AppTheme.success,
+        ),
         const SizedBox(width: 8),
         Expanded(
           child: Text(
@@ -418,8 +574,11 @@ class _TakeawayInfoStrip extends StatelessWidget {
         ),
         Row(
           children: [
-            const Icon(Icons.access_time_rounded,
-                size: 13, color: AppTheme.success),
+            const Icon(
+              Icons.access_time_rounded,
+              size: 13,
+              color: AppTheme.success,
+            ),
             const SizedBox(width: 4),
             Text(
               '~20 min',
@@ -519,7 +678,9 @@ class _MenuItemCard extends StatelessWidget {
                       onTap: onAdd,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 6),
+                          horizontal: 16,
+                          vertical: 6,
+                        ),
                         decoration: BoxDecoration(
                           color: AppTheme.primary,
                           borderRadius: BorderRadius.circular(20),
@@ -552,6 +713,7 @@ class _MenuItemCard extends StatelessWidget {
 
 class _FoodTypeBadge extends StatelessWidget {
   final bool isVeg;
+
   const _FoodTypeBadge({required this.isVeg});
 
   @override
@@ -692,8 +854,10 @@ class _CartBar extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              padding:
-              const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 8,
+                vertical: 3,
+              ),
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(8),
@@ -735,6 +899,7 @@ class _CartBar extends StatelessWidget {
 // ── Persistent header delegate ────────────────────────────────────────────────
 class _CatTabDelegate extends SliverPersistentHeaderDelegate {
   final Widget child;
+
   const _CatTabDelegate(this.child);
 
   @override
