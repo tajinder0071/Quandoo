@@ -210,12 +210,17 @@ class HomeScreen extends StatelessWidget {
 
   void _goToDetail(BuildContext context, Restaurant r) {
     context.read<AppBloc>().add(SelectRestaurant(r));
-    Navigator.push(context, MaterialPageRoute(
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
         builder: (_) => BlocProvider.value(
           value: context.read<AppBloc>(),
-          child: const RestaurantDetailScreen())));
+          child: RestaurantDetailScreen(restaurant: r),
+        ),
+      ),
+    );
   }
-
   static const _cuisineIcons = [
     ('French', '🥐'), ('Japanese', '🍱'), ('Italian', '🍝'),
     ('American', '🥩'), ('Indian', '🍛'), ('Chinese', '🥢'),
