@@ -18,6 +18,7 @@ class MainScreen extends StatelessWidget {
     BookingsScreen(),
     WishlistScreen(),
     ProfileScreen(),
+
   ];
 
   @override
