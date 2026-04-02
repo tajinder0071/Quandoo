@@ -31,7 +31,7 @@ class WishlistScreen extends StatelessWidget {
             actions: [
               if (favs.isNotEmpty)
                 Padding(
-                  padding: const EdgeInsets.only(right: 16),
+                  padding: EdgeInsets.only(right: 16),
                   child: Center(
                     child: Text(
                       '${favs.length} saved',
@@ -51,18 +51,18 @@ class WishlistScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: const BoxDecoration(
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
                     color: AppTheme.surface,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.favorite_border_rounded,
                     size: 48,
                     color: AppTheme.text3,
                   ),
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 Text(
                   'No saved restaurants',
                   style: GoogleFonts.playfairDisplay(
@@ -71,7 +71,7 @@ class WishlistScreen extends StatelessWidget {
                     color: AppTheme.text1,
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Text(
                   'Tap the ♥ on any restaurant to save it here.',
                   textAlign: TextAlign.center,
@@ -84,9 +84,9 @@ class WishlistScreen extends StatelessWidget {
             ),
           )
               : GridView.builder(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16),
             gridDelegate:
-            const SliverGridDelegateWithFixedCrossAxisCount(
+            SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,

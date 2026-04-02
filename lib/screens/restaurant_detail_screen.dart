@@ -47,12 +47,12 @@ class _DetailState extends State<RestaurantDetailScreen>
                 leading: GestureDetector(
                   onTap: () => Navigator.pop(context),
                   child: Container(
-                    margin: const EdgeInsets.all(8),
-                    decoration: const BoxDecoration(
+                    margin: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
                       color: Colors.black38,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
+                    child:  Icon(
                       Icons.arrow_back_rounded,
                       color: AppTheme.white,
                     ),
@@ -63,9 +63,9 @@ class _DetailState extends State<RestaurantDetailScreen>
                     onTap: () =>
                         context.read<AppBloc>().add(ToggleFavorite(r.id)),
                     child: Container(
-                      margin: const EdgeInsets.all(8),
-                      padding: const EdgeInsets.all(8),
-                      decoration: const BoxDecoration(
+                      margin: EdgeInsets.all(8),
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
                         color: Colors.black38,
                         shape: BoxShape.circle,
                       ),
@@ -79,13 +79,13 @@ class _DetailState extends State<RestaurantDetailScreen>
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.all(8),
-                    padding: const EdgeInsets.all(8),
-                    decoration: const BoxDecoration(
+                    margin: EdgeInsets.all(8),
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
                       color: Colors.black38,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
+                    child:  Icon(
                       Icons.share_outlined,
                       color: AppTheme.white,
                       size: 20,
@@ -115,7 +115,7 @@ class _DetailState extends State<RestaurantDetailScreen>
               children: [
                 // Restaurant info
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                  padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -132,7 +132,7 @@ class _DetailState extends State<RestaurantDetailScreen>
                             ),
                           ),
                           Container(
-                            padding: const EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                               horizontal: 10,
                               vertical: 5,
                             ),
@@ -152,7 +152,7 @@ class _DetailState extends State<RestaurantDetailScreen>
                                       ? AppTheme.success
                                       : AppTheme.error,
                                 ),
-                                const SizedBox(width: 4),
+                                SizedBox(width: 4),
                                 Text(
                                   r.isOpen ? 'Open' : 'Closed',
                                   style: GoogleFonts.dmSans(
@@ -168,7 +168,7 @@ class _DetailState extends State<RestaurantDetailScreen>
                           ),
                         ],
                       ),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6),
                       Text(
                         r.cuisine,
                         style: GoogleFonts.dmSans(
@@ -176,12 +176,12 @@ class _DetailState extends State<RestaurantDetailScreen>
                           color: AppTheme.text2,
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: 10),
                       Row(
                         children: [
                           StarRating(r.rating, count: r.reviewCount),
-                          const SizedBox(width: 16),
-                          const Icon(
+                          SizedBox(width: 16),
+                          Icon(
                             Icons.location_on_outlined,
                             size: 15,
                             color: AppTheme.text3,
@@ -193,7 +193,7 @@ class _DetailState extends State<RestaurantDetailScreen>
                               color: AppTheme.text2,
                             ),
                           ),
-                          const Spacer(),
+                          Spacer(),
                           Text(
                             r.priceString,
                             style: GoogleFonts.dmSans(
@@ -204,7 +204,7 @@ class _DetailState extends State<RestaurantDetailScreen>
                           ),
                         ],
                       ),
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12),
                       // Tags
                       Wrap(
                         spacing: 8,
@@ -212,7 +212,7 @@ class _DetailState extends State<RestaurantDetailScreen>
                         children: r.tags
                             .map(
                               (t) => Container(
-                            padding: const EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                               horizontal: 10,
                               vertical: 4,
                             ),
@@ -232,7 +232,7 @@ class _DetailState extends State<RestaurantDetailScreen>
                         )
                             .toList(),
                       ),
-                      const SizedBox(height: 14),
+                      SizedBox(height: 14),
                       // Key info row
                       Row(
                         children: [
@@ -240,7 +240,7 @@ class _DetailState extends State<RestaurantDetailScreen>
                             Icons.access_time_rounded,
                             '${r.openTime} – ${r.closeTime}',
                           ),
-                          const SizedBox(width: 10),
+                          SizedBox(width: 10),
                           _InfoBadge(
                             Icons.table_restaurant_outlined,
                             '${r.availableTables} tables available',
@@ -251,7 +251,7 @@ class _DetailState extends State<RestaurantDetailScreen>
                   ),
                 ),
 
-                const SizedBox(height: 14),
+                SizedBox(height: 14),
                 // ── Tabs ─────────────────────────────────────────
                 Container(
                   color: AppTheme.bg,
@@ -259,7 +259,7 @@ class _DetailState extends State<RestaurantDetailScreen>
                     controller: _tab,
                     isScrollable: true,
                     tabAlignment: TabAlignment.start,
-                    indicator: const UnderlineTabIndicator(
+                    indicator: UnderlineTabIndicator(
                       borderSide: BorderSide(
                         color: AppTheme.primary,
                         width: 2.5,
@@ -274,7 +274,7 @@ class _DetailState extends State<RestaurantDetailScreen>
                     labelColor: AppTheme.primary,
                     unselectedLabelColor: AppTheme.text3,
                     dividerColor: AppTheme.border,
-                    tabs: const [
+                    tabs: [
                       Tab(text: 'Menu'),
                       Tab(text: 'About'),
                       Tab(text: 'Gallery'),
@@ -305,7 +305,7 @@ class _DetailState extends State<RestaurantDetailScreen>
               16,
               12 + MediaQuery.of(context).padding.bottom,
             ),
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: AppTheme.surface,
               border: Border(
                 top: BorderSide(color: AppTheme.border, width: 0.5),
@@ -328,7 +328,7 @@ class _DetailState extends State<RestaurantDetailScreen>
                     )
                         : null,
                     style: OutlinedButton.styleFrom(
-                      minimumSize: const Size(0, 50),
+                      minimumSize: Size(0, 50),
                       foregroundColor: AppTheme.primary,
                       side: BorderSide(
                         color: r.isOpen ? AppTheme.primary : AppTheme.border,
@@ -340,8 +340,8 @@ class _DetailState extends State<RestaurantDetailScreen>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.delivery_dining_rounded, size: 18),
-                        const SizedBox(width: 6),
+                        Icon(Icons.delivery_dining_rounded, size: 18),
+                        SizedBox(width: 6),
                         Text(
                           'Order Online',
                           style: GoogleFonts.dmSans(
@@ -353,7 +353,7 @@ class _DetailState extends State<RestaurantDetailScreen>
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12),
                 // ── Book a Table button ──────────────────────────
                 Expanded(
                   child: ElevatedButton(
@@ -362,12 +362,12 @@ class _DetailState extends State<RestaurantDetailScreen>
                       MaterialPageRoute(
                         builder: (_) => BlocProvider.value(
                           value: context.read<AppBloc>(),
-                          child: const BookTableScreen(),
+                          child: BookTableScreen(),
                         ),
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(0, 50),
+                      minimumSize: Size(0, 50),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14),
                       ),
@@ -375,8 +375,8 @@ class _DetailState extends State<RestaurantDetailScreen>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.event_seat_rounded, size: 18),
-                        const SizedBox(width: 6),
+                        Icon(Icons.event_seat_rounded, size: 18),
+                        SizedBox(width: 6),
                         Text(
                           'Book Table',
                           style: GoogleFonts.dmSans(
@@ -405,7 +405,7 @@ class _InfoBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
     decoration: BoxDecoration(
       color: AppTheme.surface,
       borderRadius: BorderRadius.circular(10),
@@ -415,7 +415,7 @@ class _InfoBadge extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Icon(icon, size: 14, color: AppTheme.primary),
-        const SizedBox(width: 5),
+        SizedBox(width: 5),
         Text(
           label,
           style: GoogleFonts.dmSans(fontSize: 11, color: AppTheme.text2),
@@ -430,18 +430,18 @@ class _InfoBadge extends StatelessWidget {
 class _MenuTab extends StatelessWidget {
   final Restaurant r;
 
-  const _MenuTab({required this.r});
+   _MenuTab({required this.r});
 
   @override
   Widget build(BuildContext context) => Stack(
     children: [
       ListView(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 90),
+        padding: EdgeInsets.fromLTRB(16, 16, 16, 90),
         children: r.menu
             .map(
               (item) => Container(
-            margin: const EdgeInsets.only(bottom: 12),
-            padding: const EdgeInsets.all(12),
+            margin: EdgeInsets.only(bottom: 12),
+            padding: EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: AppTheme.card,
               borderRadius: BorderRadius.circular(14),
@@ -456,7 +456,7 @@ class _MenuTab extends StatelessWidget {
                     child: NetImg(item.imageUrl),
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -469,7 +469,7 @@ class _MenuTab extends StatelessWidget {
                           color: AppTheme.text1,
                         ),
                       ),
-                      const SizedBox(height: 3),
+                      SizedBox(height: 3),
                       Text(
                         item.description,
                         style: GoogleFonts.dmSans(
@@ -479,7 +479,7 @@ class _MenuTab extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8),
                       Row(
                         children: [
                           Text(
@@ -490,7 +490,7 @@ class _MenuTab extends StatelessWidget {
                               color: AppTheme.primary,
                             ),
                           ),
-                          const Spacer(),
+                          Spacer(),
                           GestureDetector(
                             onTap: () => Navigator.push(
                               context,
@@ -502,7 +502,7 @@ class _MenuTab extends StatelessWidget {
                               ),
                             ),
                             child: Container(
-                              padding: const EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                   horizontal: 14, vertical: 5),
                               decoration: BoxDecoration(
                                 color: AppTheme.primary,
@@ -546,9 +546,9 @@ class _MenuTab extends StatelessWidget {
           ),
           child: Container(
             padding:
-            const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+            EdgeInsets.symmetric(horizontal: 20, vertical: 14),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
+              gradient: LinearGradient(
                 colors: [AppTheme.primary, AppTheme.primaryDk],
               ),
               borderRadius: BorderRadius.circular(14),
@@ -556,16 +556,16 @@ class _MenuTab extends StatelessWidget {
                 BoxShadow(
                   color: AppTheme.primary.withOpacity(0.35),
                   blurRadius: 14,
-                  offset: const Offset(0, 4),
+                  offset: Offset(0, 4),
                 ),
               ],
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.delivery_dining_rounded,
+                Icon(Icons.delivery_dining_rounded,
                     color: AppTheme.white, size: 20),
-                const SizedBox(width: 10),
+                SizedBox(width: 10),
                 Text(
                   'Order Online – Delivery & Takeaway',
                   style: GoogleFonts.dmSans(
@@ -591,7 +591,7 @@ class _AboutTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListView(
-    padding: const EdgeInsets.all(16),
+    padding: EdgeInsets.all(16),
     children: [
       Text(
         'About',
@@ -601,7 +601,7 @@ class _AboutTab extends StatelessWidget {
           color: AppTheme.text1,
         ),
       ),
-      const SizedBox(height: 10),
+      SizedBox(height: 10),
       Text(
         r.description,
         style: GoogleFonts.dmSans(
@@ -610,9 +610,9 @@ class _AboutTab extends StatelessWidget {
           height: 1.7,
         ),
       ),
-      const SizedBox(height: 20),
+      SizedBox(height: 20),
       Container(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: AppTheme.card,
           borderRadius: BorderRadius.circular(14),
@@ -620,19 +620,19 @@ class _AboutTab extends StatelessWidget {
         child: Column(
           children: [
             InfoRow(icon: Icons.phone_outlined, label: 'Phone', value: r.phone),
-            const Divider(color: AppTheme.border, height: 20),
+            Divider(color: AppTheme.border, height: 20),
             InfoRow(
               icon: Icons.location_on_outlined,
               label: 'Address',
               value: r.location,
             ),
-            const Divider(color: AppTheme.border, height: 20),
+            Divider(color: AppTheme.border, height: 20),
             InfoRow(
               icon: Icons.access_time_rounded,
               label: 'Hours',
               value: '${r.openTime} – ${r.closeTime}',
             ),
-            const Divider(color: AppTheme.border, height: 20),
+            Divider(color: AppTheme.border, height: 20),
             InfoRow(
               icon: Icons.table_restaurant_outlined,
               label: 'Available',
@@ -653,8 +653,8 @@ class _GalleryTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => GridView.builder(
-    padding: const EdgeInsets.all(16),
-    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+    padding: EdgeInsets.all(16),
+    gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 2,
       crossAxisSpacing: 10,
       mainAxisSpacing: 10,
@@ -672,15 +672,15 @@ class _GalleryTab extends StatelessWidget {
 class _ReviewsTab extends StatelessWidget {
   final Restaurant r;
 
-  const _ReviewsTab({required this.r});
+   _ReviewsTab({required this.r});
 
   @override
   Widget build(BuildContext context) => ListView(
-    padding: const EdgeInsets.all(16),
+    padding: EdgeInsets.all(16),
     children: [
       // Rating overview
       Container(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: AppTheme.card,
           borderRadius: BorderRadius.circular(14),
@@ -698,7 +698,7 @@ class _ReviewsTab extends StatelessWidget {
                   ),
                 ),
                 StarRating(r.rating, size: 16),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Text(
                   '${r.reviewCount} reviews',
                   style: GoogleFonts.dmSans(
@@ -708,13 +708,13 @@ class _ReviewsTab extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(width: 20),
+            SizedBox(width: 20),
             Expanded(
               child: Column(
                 children: [5, 4, 3, 2, 1]
                     .map(
                       (s) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    padding: EdgeInsets.symmetric(vertical: 2),
                     child: Row(
                       children: [
                         Text(
@@ -724,7 +724,7 @@ class _ReviewsTab extends StatelessWidget {
                             color: AppTheme.text3,
                           ),
                         ),
-                        const SizedBox(width: 6),
+                        SizedBox(width: 6),
                         Expanded(
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(4),
@@ -750,11 +750,11 @@ class _ReviewsTab extends StatelessWidget {
           ],
         ),
       ),
-      const SizedBox(height: 16),
+      SizedBox(height: 16),
       ...r.reviews.map(
             (rev) => Container(
-          margin: const EdgeInsets.only(bottom: 12),
-          padding: const EdgeInsets.all(14),
+          margin: EdgeInsets.only(bottom: 12),
+          padding: EdgeInsets.all(14),
           decoration: BoxDecoration(
             color: AppTheme.card,
             borderRadius: BorderRadius.circular(14),
@@ -775,7 +775,7 @@ class _ReviewsTab extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  SizedBox(width: 10),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -801,7 +801,7 @@ class _ReviewsTab extends StatelessWidget {
                   StarRating(rev.rating, size: 13),
                 ],
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Text(
                 rev.comment,
                 style: GoogleFonts.dmSans(

@@ -253,19 +253,9 @@ class _OnboardingState extends State<OnboardingScreen> {
         ),
         Positioned(
           bottom: 0, left: 0, right: 0,
-          child: Container(
+          child: Padding(
             padding: EdgeInsets.fromLTRB(
                 24, 28, 24, 32 + MediaQuery.of(context).padding.bottom),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter, end: Alignment.bottomCenter,
-                colors: [
-                  Colors.transparent,
-                  AppTheme.bg.withOpacity(0.97),
-                  AppTheme.bg,
-                ],
-              ),
-            ),
             child: Column(mainAxisSize: MainAxisSize.min, children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -274,7 +264,7 @@ class _OnboardingState extends State<OnboardingScreen> {
                   margin: EdgeInsets.symmetric(horizontal: 4),
                   width: _page == i ? 24 : 8, height: 8,
                   decoration: BoxDecoration(
-                      color: _page == i ? AppTheme.primary : AppTheme.text3,
+                      color: _page == i ? AppTheme.primary : AppTheme.text1,
                       borderRadius: BorderRadius.circular(4)),
                 )),
               ),
