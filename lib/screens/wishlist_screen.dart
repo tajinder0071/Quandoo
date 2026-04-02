@@ -23,7 +23,7 @@ class WishlistScreen extends StatelessWidget {
           actions: [
             if (favs.isNotEmpty)
               Padding(
-                padding: const EdgeInsets.only(right: 16),
+                padding:  EdgeInsets.only(right: 16),
                 child: Center(child: Text('${favs.length} saved',
                     style: GoogleFonts.dmSans(
                         color: AppTheme.primary, fontWeight: FontWeight.w600, fontSize: 13))),
@@ -32,22 +32,22 @@ class WishlistScreen extends StatelessWidget {
         ),
         body: favs.isEmpty
             ? Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
-                Container(padding: const EdgeInsets.all(20),
+                Container(padding:  EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     color: AppTheme.surface, shape: BoxShape.circle),
-                  child: const Icon(Icons.favorite_border_rounded,
+                  child:  Icon(Icons.favorite_border_rounded,
                       size: 48, color: AppTheme.text3)),
-                const SizedBox(height: 20),
+                 SizedBox(height: 20),
                 Text('No saved restaurants', style: GoogleFonts.playfairDisplay(
                     fontSize: 20, fontWeight: FontWeight.w600, color: AppTheme.text1)),
-                const SizedBox(height: 8),
+                 SizedBox(height: 8),
                 Text('Tap the ♥ on any restaurant to save it here.',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.dmSans(fontSize: 13, color: AppTheme.text2)),
               ]))
             : GridView.builder(
-                padding: const EdgeInsets.all(16),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                padding:  EdgeInsets.all(16),
+                gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2, crossAxisSpacing: 12,
                     mainAxisSpacing: 12, childAspectRatio: 0.78),
                 itemCount: favs.length,
@@ -58,7 +58,7 @@ class WishlistScreen extends StatelessWidget {
                     Navigator.push(context, MaterialPageRoute(
                         builder: (_) => BlocProvider.value(
                           value: context.read<AppBloc>(),
-                          child: const RestaurantDetailScreen())));
+                          child:  RestaurantDetailScreen())));
                   },
                   onFav: () => context.read<AppBloc>().add(ToggleFavorite(favs[i].id)),
                 ),

@@ -47,13 +47,13 @@ class NotificationsScreen extends StatelessWidget {
         ],
       ),
       body: ListView.separated(
-        padding: const EdgeInsets.all(16),
-        separatorBuilder: (_, __) => const SizedBox(height: 10),
+        padding:  EdgeInsets.all(16),
+        separatorBuilder: (_, __) =>  SizedBox(height: 10),
         itemCount: _items.length,
         itemBuilder: (_, i) {
           final n = _items[i];
           return Container(
-            padding: const EdgeInsets.all(14),
+            padding:  EdgeInsets.all(14),
             decoration: BoxDecoration(
               color: n.isRead ? AppTheme.card : AppTheme.card,
               borderRadius: BorderRadius.circular(14),
@@ -62,27 +62,27 @@ class NotificationsScreen extends StatelessWidget {
                   : Border.all(color: n.accentColor.withOpacity(0.3))),
             child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
               // Icon
-              Container(padding: const EdgeInsets.all(10),
+              Container(padding:  EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: n.accentColor.withOpacity(0.12),
                   borderRadius: BorderRadius.circular(12)),
                 child: Icon(n.icon, color: n.accentColor, size: 20)),
-              const SizedBox(width: 12),
+               SizedBox(width: 12),
               // Content
               Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Row(children: [
                   Expanded(child: Text(n.title, style: GoogleFonts.dmSans(
                       fontSize: 14, fontWeight: FontWeight.w700, color: AppTheme.text1))),
-                  const SizedBox(width: 8),
+                   SizedBox(width: 8),
                   Text(n.time, style: GoogleFonts.dmSans(fontSize: 10, color: AppTheme.text3)),
                 ]),
-                const SizedBox(height: 4),
+                 SizedBox(height: 4),
                 Text(n.body, style: GoogleFonts.dmSans(
                     fontSize: 12, color: AppTheme.text2, height: 1.55)),
               ])),
               // Unread dot
               if (!n.isRead) ...[
-                const SizedBox(width: 8),
+                 SizedBox(width: 8),
                 Container(width: 8, height: 8,
                   decoration: BoxDecoration(
                     color: n.accentColor, shape: BoxShape.circle)),

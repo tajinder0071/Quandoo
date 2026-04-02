@@ -50,7 +50,8 @@ class _BookingList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (bookings.isEmpty) return Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
+    if (bookings.isEmpty) {
+      return Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
       Icon(status == BookingStatus.active ? Icons.event_seat_outlined
           : status == BookingStatus.completed ? Icons.check_circle_outline_rounded
           : Icons.cancel_outlined, size: 52, color: AppTheme.text3),
@@ -61,6 +62,7 @@ class _BookingList extends StatelessWidget {
       Text('Your reservations will appear here.', style: GoogleFonts.dmSans(
           fontSize: 13, color: AppTheme.text3)),
     ]));
+    }
 
     return ListView.separated(
       padding: const EdgeInsets.all(16),

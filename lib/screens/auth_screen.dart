@@ -152,10 +152,10 @@ class _AuthState extends State<AuthScreen>
                     unselectedLabelColor: AppTheme.text2,
                     dividerColor: Colors.transparent,
                     indicatorSize: TabBarIndicatorSize.tab,
-                    tabs: const [Tab(text: 'Sign In'), Tab(text: 'Sign Up')],
+                    tabs:  [Tab(text: 'Sign In'), Tab(text: 'Sign Up')],
                   ),
                 ),
-                const SizedBox(height: 28),
+                 SizedBox(height: 28),
 
                 // ── Forms via AnimatedSwitcher ────────────────────
                 BlocBuilder<AppBloc, AppState>(
@@ -163,20 +163,20 @@ class _AuthState extends State<AuthScreen>
                   builder: (context, state) {
                     final loading = state.authStatus == AuthStatus.loading;
                     return AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 280),
+                      duration:  Duration(milliseconds: 280),
                       switchInCurve: Curves.easeOut,
                       switchOutCurve: Curves.easeIn,
                       transitionBuilder: (child, anim) => FadeTransition(
                         opacity: anim,
                         child: SlideTransition(
                           position: Tween<Offset>(
-                              begin: const Offset(0.04, 0), end: Offset.zero)
+                              begin:  Offset(0.04, 0), end: Offset.zero)
                               .animate(anim),
                           child: child),
                       ),
                       child: _tabIndex == 0
                           ? _SignInForm(
-                              key: const ValueKey('signin'),
+                              key:  ValueKey('signin'),
                               emailCtrl: _emailSignInCtrl,
                               passCtrl: _passSignInCtrl,
                               obscure: _obscureIn,
@@ -185,7 +185,7 @@ class _AuthState extends State<AuthScreen>
                               onSubmit: () => _signIn(context),
                             )
                           : _SignUpForm(
-                              key: const ValueKey('signup'),
+                              key:  ValueKey('signup'),
                               nameCtrl: _nameSignUpCtrl,
                               emailCtrl: _emailSignUpCtrl,
                               passCtrl: _passSignUpCtrl,
@@ -198,20 +198,20 @@ class _AuthState extends State<AuthScreen>
                   },
                 ),
 
-                const SizedBox(height: 24),
+                 SizedBox(height: 24),
                 Row(children: [
-                  const Expanded(child: Divider(color: AppTheme.border)),
-                  Padding(padding: const EdgeInsets.symmetric(horizontal: 12),
+                   Expanded(child: Divider(color: AppTheme.border)),
+                  Padding(padding:  EdgeInsets.symmetric(horizontal: 12),
                     child: Text('or continue with', style: GoogleFonts.dmSans(
                         fontSize: 12, color: AppTheme.text3))),
-                  const Expanded(child: Divider(color: AppTheme.border)),
+                   Expanded(child: Divider(color: AppTheme.border)),
                 ]),
-                const SizedBox(height: 20),
+                 SizedBox(height: 20),
                 Row(children: [
                   _SocialBtn(label: 'Google',
                       icon: Icons.g_mobiledata_rounded,
                       onTap: () => _showSnack(context, 'Google sign-in coming soon')),
-                  const SizedBox(width: 12),
+                   SizedBox(width: 12),
                   _SocialBtn(label: 'Apple',
                       icon: Icons.apple_rounded,
                       onTap: () => _showSnack(context, 'Apple sign-in coming soon')),
@@ -238,21 +238,21 @@ class _SignInForm extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.start, children: [
     _FieldLabel('Email'),
-    const SizedBox(height: 6),
+     SizedBox(height: 6),
     _InputField(hint: 'your@email.com', ctrl: emailCtrl,
         icon: Icons.mail_outline_rounded, type: TextInputType.emailAddress),
-    const SizedBox(height: 14),
+     SizedBox(height: 14),
     _FieldLabel('Password'),
-    const SizedBox(height: 6),
+     SizedBox(height: 6),
     _InputField(hint: '••••••••', ctrl: passCtrl,
         icon: Icons.lock_outline_rounded, type: TextInputType.text,
         obscure: obscure, onToggleObscure: onToggle),
-    const SizedBox(height: 6),
+     SizedBox(height: 6),
     Align(alignment: Alignment.centerRight,
       child: TextButton(onPressed: () {},
         child: Text('Forgot Password?', style: GoogleFonts.dmSans(
             color: AppTheme.primary, fontWeight: FontWeight.w600)))),
-    const SizedBox(height: 12),
+     SizedBox(height: 12),
     _SubmitBtn(label: 'Sign In', loading: loading, onPressed: onSubmit),
   ]);
 }
@@ -270,24 +270,24 @@ class _SignUpForm extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.start, children: [
     _FieldLabel('Full Name'),
-    const SizedBox(height: 6),
+     SizedBox(height: 6),
     _InputField(hint: 'Your name', ctrl: nameCtrl,
         icon: Icons.person_outline_rounded, type: TextInputType.name),
-    const SizedBox(height: 14),
+     SizedBox(height: 14),
     _FieldLabel('Email'),
-    const SizedBox(height: 6),
+     SizedBox(height: 6),
     _InputField(hint: 'your@email.com', ctrl: emailCtrl,
         icon: Icons.mail_outline_rounded, type: TextInputType.emailAddress),
-    const SizedBox(height: 14),
+     SizedBox(height: 14),
     _FieldLabel('Password'),
-    const SizedBox(height: 6),
+     SizedBox(height: 6),
     _InputField(hint: 'Min 6 characters', ctrl: passCtrl,
         icon: Icons.lock_outline_rounded, type: TextInputType.text,
         obscure: obscure, onToggleObscure: onToggle),
-    const SizedBox(height: 6),
+     SizedBox(height: 6),
     Text('Password must be at least 6 characters.',
         style: GoogleFonts.dmSans(fontSize: 11, color: AppTheme.text3)),
-    const SizedBox(height: 20),
+     SizedBox(height: 20),
     _SubmitBtn(label: 'Create Account', loading: loading, onPressed: onSubmit),
   ]);
 }
@@ -340,7 +340,7 @@ class _SubmitBtn extends StatelessWidget {
     child: ElevatedButton(
       onPressed: loading ? null : onPressed,
       child: loading
-          ? const SizedBox(width: 22, height: 22,
+          ?  SizedBox(width: 22, height: 22,
               child: CircularProgressIndicator(color: AppTheme.white, strokeWidth: 2))
           : Text(label, style: GoogleFonts.dmSans(
               fontSize: 16, fontWeight: FontWeight.w700)),
@@ -360,9 +360,9 @@ class _SocialBtn extends StatelessWidget {
       onPressed: onTap,
       style: OutlinedButton.styleFrom(
         foregroundColor: AppTheme.text1,
-        side: const BorderSide(color: AppTheme.border),
+        side:  BorderSide(color: AppTheme.border),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        padding: const EdgeInsets.symmetric(vertical: 14),
+        padding:  EdgeInsets.symmetric(vertical: 14),
       ),
       icon: Icon(icon, size: 18, color: AppTheme.text1),
       label: Text(label, style: GoogleFonts.dmSans(

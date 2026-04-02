@@ -326,7 +326,7 @@ class _DetailState extends State<RestaurantDetailScreen>
                       children: [
                         Text(
                           '\$45',
-                          style: GoogleFonts.playfairDisplay(
+                          style: GoogleFonts.dmSans(
                             fontSize: 22,
                             fontWeight: FontWeight.w700,
                             color: AppTheme.primary,

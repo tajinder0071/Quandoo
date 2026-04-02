@@ -30,13 +30,13 @@ class MainScreen extends StatelessWidget {
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
             color: AppTheme.surface,
-            border: const Border(top: BorderSide(color: AppTheme.border, width: 0.5)),
+            border:  Border(top: BorderSide(color: AppTheme.border, width: 0.5)),
             boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.2),
-                blurRadius: 16, offset: const Offset(0, -4))],
+                blurRadius: 16, offset:  Offset(0, -4))],
           ),
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              padding:  EdgeInsets.symmetric(vertical: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -70,15 +70,15 @@ class _NavItem extends StatelessWidget {
         return GestureDetector(
           onTap: () => context.read<AppBloc>().add(ChangeTab(index)),
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            duration:  Duration(milliseconds: 200),
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
               color: selected ? AppTheme.primary.withOpacity(0.12) : Colors.transparent,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(mainAxisSize: MainAxisSize.min, children: [
               Icon(icon, color: selected ? AppTheme.primary : AppTheme.text3, size: 22),
-              const SizedBox(height: 3),
+              SizedBox(height: 3),
               Text(label, style: GoogleFonts.dmSans(
                 fontSize: 10, fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
                 color: selected ? AppTheme.primary : AppTheme.text3)),

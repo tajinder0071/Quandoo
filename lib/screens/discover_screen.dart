@@ -24,16 +24,16 @@ class DiscoverScreen extends StatelessWidget {
           automaticallyImplyLeading: false,
         ),
         body: Column(children: [
-          Padding(padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+          Padding(padding: EdgeInsets.fromLTRB(16, 0, 16, 12),
             child: TextField(
               onChanged: (v) => context.read<AppBloc>().add(SetSearchQuery(v)),
               style: GoogleFonts.dmSans(color: AppTheme.text1),
               decoration: InputDecoration(
                 hintText: 'Search restaurants, cuisine...',
-                prefixIcon: const Icon(Icons.search_rounded, color: AppTheme.text3),
+                prefixIcon: Icon(Icons.search_rounded, color: AppTheme.text3),
                 suffixIcon: state.searchQuery.isNotEmpty
-                    ? IconButton(icon: const Icon(Icons.close_rounded, color: AppTheme.text3),
-                        onPressed: () => context.read<AppBloc>().add(const SetSearchQuery('')))
+                    ? IconButton(icon:  Icon(Icons.close_rounded, color: AppTheme.text3),
+                        onPressed: () => context.read<AppBloc>().add( SetSearchQuery('')))
                     : null,
               ),
             )),
@@ -41,8 +41,8 @@ class DiscoverScreen extends StatelessWidget {
           SizedBox(height: 44,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              separatorBuilder: (_, __) => const SizedBox(width: 8),
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              separatorBuilder: (_, __) => SizedBox(width: 8),
               itemCount: cuisineCategories.length,
               itemBuilder: (_, i) => TagChip(
                 label: cuisineCategories[i],
@@ -50,28 +50,28 @@ class DiscoverScreen extends StatelessWidget {
                 onTap: () => context.read<AppBloc>().add(SelectCuisine(cuisineCategories[i])),
               ),
             )),
-          const SizedBox(height: 12),
-          Padding(padding: const EdgeInsets.symmetric(horizontal: 16),
+          SizedBox(height: 12),
+          Padding(padding: EdgeInsets.symmetric(horizontal: 16),
             child: Row(children: [
               Text('${results.length} restaurants found', style: GoogleFonts.dmSans(
                   fontSize: 13, color: AppTheme.text2)),
-              const Spacer(),
+              Spacer(),
               Icon(Icons.tune_rounded, size: 16, color: AppTheme.primary),
-              const SizedBox(width: 4),
+              SizedBox(width: 4),
               Text('Filter', style: GoogleFonts.dmSans(
                   fontSize: 13, fontWeight: FontWeight.w600, color: AppTheme.primary)),
             ])),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Expanded(child: results.isEmpty
               ? Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  const Icon(Icons.search_off_rounded, size: 48, color: AppTheme.text3),
-                  const SizedBox(height: 12),
+                Icon(Icons.search_off_rounded, size: 48, color: AppTheme.text3),
+                  SizedBox(height: 12),
                   Text('No restaurants found', style: GoogleFonts.dmSans(
                       fontSize: 16, color: AppTheme.text2)),
                 ]))
               : ListView.separated(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  separatorBuilder: (_, __) => const SizedBox(height: 12),
+                  padding:  EdgeInsets.symmetric(horizontal: 16),
+                  separatorBuilder: (_, __) => SizedBox(height: 12),
                   itemCount: results.length,
                   itemBuilder: (context, i) => RestaurantCardH(
                     r: results[i],
@@ -80,7 +80,7 @@ class DiscoverScreen extends StatelessWidget {
                       Navigator.push(context, MaterialPageRoute(
                           builder: (_) => BlocProvider.value(
                             value: context.read<AppBloc>(),
-                            child: const RestaurantDetailScreen())));
+                            child: RestaurantDetailScreen())));
                     },
                     onFav: () => context.read<AppBloc>().add(ToggleFavorite(results[i].id)),
                   ),

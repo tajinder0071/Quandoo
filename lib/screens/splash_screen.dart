@@ -54,11 +54,11 @@ class _SplashState extends State<SplashScreen>
   }
 
   @override
-  void dispose() { _ctrl.dispose(); super.dispose(); }
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
 
-  /// Called when BOTH conditions are met:
-  ///   a) minimum splash time has elapsed
-  ///   b) auth check is complete
   void _tryNavigate() {
     if (!_minTimeElapsed || !_authChecked) return;
     if (!mounted) return;
@@ -88,10 +88,10 @@ class _SplashState extends State<SplashScreen>
       child: Scaffold(
         backgroundColor: AppTheme.bg,
         body: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter, end: Alignment.bottomCenter,
-              colors: [Color(0xFF0F1923), Color(0xFF1A2433)],
+              colors: [Color(0xFFF8F5F0), Color(0xFFFFFFFF)],
             ),
           ),
           child: Stack(fit: StackFit.expand, children: [
@@ -120,23 +120,23 @@ class _SplashState extends State<SplashScreen>
                       Container(
                         width: 90, height: 90,
                         decoration: BoxDecoration(
-                          gradient: const LinearGradient(
+                          gradient:  LinearGradient(
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                               colors: [AppTheme.primary, AppTheme.primaryDk]),
                           borderRadius: BorderRadius.circular(24),
                           boxShadow: [BoxShadow(
                               color: AppTheme.primary.withOpacity(0.4),
-                              blurRadius: 28, offset: const Offset(0, 8))],
+                              blurRadius: 28, offset:  Offset(0, 8))],
                         ),
-                        child: const Icon(Icons.restaurant_rounded,
+                        child:  Icon(Icons.restaurant_rounded,
                             color: AppTheme.white, size: 44),
                       ),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24),
                       Text('TableLux', style: GoogleFonts.playfairDisplay(
                           fontSize: 36, fontWeight: FontWeight.w700,
                           color: AppTheme.text1, letterSpacing: 1)),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6),
                       Text('Reserve. Dine. Indulge.', style: GoogleFonts.dmSans(
                           fontSize: 14, color: AppTheme.text2, letterSpacing: 0.5)),
                     ]),
@@ -158,19 +158,19 @@ class _SplashState extends State<SplashScreen>
                       buildWhen: (a, b) => a.authStatus != b.authStatus,
                       builder: (_, state) => AnimatedOpacity(
                         opacity: state.authStatus == AuthStatus.loading ? 1 : 0,
-                        duration: const Duration(milliseconds: 300),
-                        child: const SizedBox(
+                        duration:  Duration(milliseconds: 300),
+                        child: SizedBox(
                             width: 20, height: 20,
                             child: CircularProgressIndicator(
                                 color: AppTheme.primary,
                                 strokeWidth: 2)),
                       ),
                     ),
-                    const SizedBox(height: 10),
+                     SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(3, (i) => Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 3),
+                        margin: EdgeInsets.symmetric(horizontal: 3),
                         width: i == 0 ? 20 : 6, height: 6,
                         decoration: BoxDecoration(
                             color: i == 0 ? AppTheme.primary : AppTheme.text3,
@@ -221,7 +221,10 @@ class _OnboardingState extends State<OnboardingScreen> {
   ];
 
   @override
-  void dispose() { _ctrl.dispose(); super.dispose(); }
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
 
   void _next() {
     if (_page < 2) {
@@ -229,12 +232,12 @@ class _OnboardingState extends State<OnboardingScreen> {
           duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
     } else {
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (_) => const AuthScreen()));
+          MaterialPageRoute(builder: (_) =>  AuthScreen()));
     }
   }
 
   void _skip() => Navigator.pushReplacement(context,
-      MaterialPageRoute(builder: (_) => const AuthScreen()));
+      MaterialPageRoute(builder: (_) =>  AuthScreen()));
 
   @override
   Widget build(BuildContext context) {
@@ -267,15 +270,15 @@ class _OnboardingState extends State<OnboardingScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(3, (i) => AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  duration:  Duration(milliseconds: 300),
+                  margin: EdgeInsets.symmetric(horizontal: 4),
                   width: _page == i ? 24 : 8, height: 8,
                   decoration: BoxDecoration(
                       color: _page == i ? AppTheme.primary : AppTheme.text3,
                       borderRadius: BorderRadius.circular(4)),
                 )),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
               if (_page < 2)
                 Row(children: [
                   TextButton(
@@ -284,16 +287,16 @@ class _OnboardingState extends State<OnboardingScreen> {
                         color: AppTheme.text2, fontSize: 15,
                         fontWeight: FontWeight.w600)),
                   ),
-                  const Spacer(),
+                  Spacer(),
                   ElevatedButton(
                     onPressed: _next,
                     style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(120, 52)),
+                        minimumSize: Size(120, 52)),
                     child: Row(mainAxisSize: MainAxisSize.min, children: [
                       Text('Next', style: GoogleFonts.dmSans(
                           fontSize: 16, fontWeight: FontWeight.w700)),
-                      const SizedBox(width: 6),
-                      const Icon(Icons.arrow_forward_rounded, size: 18),
+                      SizedBox(width: 6),
+                      Icon(Icons.arrow_forward_rounded, size: 18),
                     ]),
                   ),
                 ])
@@ -302,7 +305,7 @@ class _OnboardingState extends State<OnboardingScreen> {
                   Expanded(child: ElevatedButton(
                     onPressed: _next,
                     style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(0, 52)),
+                        minimumSize: Size(0, 52)),
                     child: Text('Get Started', style: GoogleFonts.dmSans(
                         fontSize: 16, fontWeight: FontWeight.w700)),
                   )),
@@ -341,18 +344,18 @@ class _OBPage extends StatelessWidget {
       ]),
     ),
     Padding(
-      padding: const EdgeInsets.fromLTRB(28, 20, 28, 0),
+      padding:  EdgeInsets.fromLTRB(28, 20, 28, 0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Container(padding: const EdgeInsets.all(10),
+        Container(padding:  EdgeInsets.all(10),
             decoration: BoxDecoration(
                 color: AppTheme.primary.withOpacity(0.15),
                 borderRadius: BorderRadius.circular(12)),
             child: Icon(data.icon, color: AppTheme.primary, size: 22)),
-        const SizedBox(height: 16),
+         SizedBox(height: 16),
         Text(data.title, style: GoogleFonts.playfairDisplay(
             fontSize: 30, fontWeight: FontWeight.w700,
             color: AppTheme.text1, height: 1.2)),
-        const SizedBox(height: 12),
+         SizedBox(height: 12),
         Text(data.subtitle, style: GoogleFonts.dmSans(
             fontSize: 15, color: AppTheme.text2, height: 1.65)),
       ]),

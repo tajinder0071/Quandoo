@@ -28,7 +28,7 @@ class _BookState extends State<BookTableScreen> {
         Navigator.pushReplacement(context, MaterialPageRoute(
             builder: (_) => BlocProvider.value(
                 value: context.read<AppBloc>(),
-                child: const BookingSuccessScreen())));
+                child:  BookingSuccessScreen())));
       },
       builder: (context, state) {
         final r = state.selectedRestaurant!;
@@ -37,18 +37,18 @@ class _BookState extends State<BookTableScreen> {
           appBar: AppBar(
             backgroundColor: AppTheme.bg,
             leading: IconButton(
-                icon: const Icon(Icons.arrow_back_rounded),
+                icon:  Icon(Icons.arrow_back_rounded),
                 onPressed: () => _step > 0 ? setState(() => _step--) : Navigator.pop(context)),
             title: Text('Book a Table', style: GoogleFonts.dmSans(
                 fontSize: 18, fontWeight: FontWeight.w700, color: AppTheme.text1)),
-            bottom: PreferredSize(preferredSize: const Size.fromHeight(4),
+            bottom: PreferredSize(preferredSize:  Size.fromHeight(4),
                 child: _StepIndicator(currentStep: _step, totalSteps: 3)),
           ),
           body: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 300),
+            duration:  Duration(milliseconds: 300),
             transitionBuilder: (child, anim) => FadeTransition(opacity: anim,
                 child: SlideTransition(position: Tween<Offset>(
-                    begin: const Offset(0.05, 0), end: Offset.zero).animate(anim), child: child)),
+                    begin:  Offset(0.05, 0), end: Offset.zero).animate(anim), child: child)),
             child: _buildStep(context, state, r),
           ),
         );
@@ -58,13 +58,13 @@ class _BookState extends State<BookTableScreen> {
 
   Widget _buildStep(BuildContext context, AppState state, r) {
     switch (_step) {
-      case 0: return _Step1(key: const ValueKey(0),
+      case 0: return _Step1(key:  ValueKey(0),
           state: state, onNext: () => setState(() => _step = 1));
-      case 1: return _Step2(key: const ValueKey(1),
+      case 1: return _Step2(key:  ValueKey(1),
           state: state, nameCtrl: _nameCtrl, reqCtrl: _reqCtrl,
           onNext: () => setState(() => _step = 2));
-      case 2: return _Step3(key: const ValueKey(2), state: state, nameCtrl: _nameCtrl, reqCtrl: _reqCtrl);
-      default: return const SizedBox.shrink();
+      case 2: return _Step3(key:  ValueKey(2), state: state, nameCtrl: _nameCtrl, reqCtrl: _reqCtrl);
+      default: return  SizedBox.shrink();
     }
   }
 }
@@ -77,7 +77,7 @@ class _StepIndicator extends StatelessWidget {
   Widget build(BuildContext context) => Row(
     children: List.generate(totalSteps, (i) => Expanded(child: Container(
         height: 3,
-        margin: const EdgeInsets.symmetric(horizontal: 2),
+        margin:  EdgeInsets.symmetric(horizontal: 2),
         decoration: BoxDecoration(
             color: i <= currentStep ? AppTheme.primary : AppTheme.border,
             borderRadius: BorderRadius.circular(2))))),
@@ -92,22 +92,22 @@ class _Step1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
-    padding: const EdgeInsets.all(16),
+    padding:  EdgeInsets.all(16),
     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text('Select Date', style: GoogleFonts.dmSans(
           fontSize: 16, fontWeight: FontWeight.w700, color: AppTheme.text1)),
-      const SizedBox(height: 12),
+       SizedBox(height: 12),
 
       // ── Custom BLoC-driven calendar ────────────────────────
       _LuxCalendar(selectedDate: state.selectedDate),
 
-      const SizedBox(height: 20),
+       SizedBox(height: 20),
       Text('Select Time', style: GoogleFonts.dmSans(
           fontSize: 16, fontWeight: FontWeight.w700, color: AppTheme.text1)),
-      const SizedBox(height: 12),
+       SizedBox(height: 12),
       GridView.builder(
-        shrinkWrap: true, physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        shrinkWrap: true, physics:  NeverScrollableScrollPhysics(),
+        gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4, crossAxisSpacing: 8, mainAxisSpacing: 8, childAspectRatio: 2.2),
         itemCount: timeSlots.length,
         itemBuilder: (_, i) {
@@ -117,7 +117,7 @@ class _Step1 extends StatelessWidget {
           return GestureDetector(
             onTap: unavail ? null : () => context.read<AppBloc>().add(SelectTimeSlot(slot)),
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 150),
+              duration:  Duration(milliseconds: 150),
               decoration: BoxDecoration(
                   color: sel ? AppTheme.primary : unavail ? AppTheme.surface.withOpacity(0.4) : AppTheme.card,
                   borderRadius: BorderRadius.circular(10),
@@ -132,18 +132,18 @@ class _Step1 extends StatelessWidget {
         },
       ),
 
-      const SizedBox(height: 20),
+       SizedBox(height: 20),
       Text('Number of Guests', style: GoogleFonts.dmSans(
           fontSize: 16, fontWeight: FontWeight.w700, color: AppTheme.text1)),
-      const SizedBox(height: 12),
+       SizedBox(height: 12),
       Row(children: List.generate(8, (i) {
         final n = i + 1;
         final sel = state.selectedGuests == n;
         return Expanded(child: GestureDetector(
           onTap: () => context.read<AppBloc>().add(SelectGuests(n)),
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 150),
-            margin: const EdgeInsets.only(right: 6),
+            duration:  Duration(milliseconds: 150),
+            margin:  EdgeInsets.only(right: 6),
             height: 44,
             decoration: BoxDecoration(
                 color: sel ? AppTheme.primary : AppTheme.card,
@@ -157,18 +157,18 @@ class _Step1 extends StatelessWidget {
         ));
       })),
 
-      const SizedBox(height: 20),
+       SizedBox(height: 20),
       Text('Table Preference', style: GoogleFonts.dmSans(
           fontSize: 16, fontWeight: FontWeight.w700, color: AppTheme.text1)),
-      const SizedBox(height: 12),
+       SizedBox(height: 12),
       ...tableTypes.map((t) {
         final sel = state.selectedTableType == t;
         return GestureDetector(
           onTap: () => context.read<AppBloc>().add(SelectTableType(t)),
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 150),
-            margin: const EdgeInsets.only(bottom: 8),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            duration:  Duration(milliseconds: 150),
+            margin:  EdgeInsets.only(bottom: 8),
+            padding:  EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             decoration: BoxDecoration(
                 color: sel ? AppTheme.primary.withOpacity(0.1) : AppTheme.card,
                 borderRadius: BorderRadius.circular(12),
@@ -176,18 +176,18 @@ class _Step1 extends StatelessWidget {
             child: Row(children: [
               Icon(Icons.table_restaurant_outlined,
                   color: sel ? AppTheme.primary : AppTheme.text3, size: 20),
-              const SizedBox(width: 12),
+               SizedBox(width: 12),
               Text(t, style: GoogleFonts.dmSans(fontSize: 14,
                   fontWeight: sel ? FontWeight.w700 : FontWeight.w500,
                   color: sel ? AppTheme.primary : AppTheme.text1)),
-              const Spacer(),
-              if (sel) const Icon(Icons.check_circle_rounded, color: AppTheme.primary, size: 18),
+               Spacer(),
+              if (sel)  Icon(Icons.check_circle_rounded, color: AppTheme.primary, size: 18),
             ]),
           ),
         );
       }),
 
-      const SizedBox(height: 24),
+       SizedBox(height: 24),
       PrimaryBtn(
         label: 'Continue',
         icon: Icons.arrow_forward_rounded,
@@ -232,7 +232,7 @@ class _LuxCalendarState extends State<_LuxCalendar> {
 
   bool _isBefore(DateTime d) => d.isBefore(_today);
   bool _isAfter(DateTime d) =>
-      d.isAfter(_today.add(const Duration(days: 90)));
+      d.isAfter(_today.add( Duration(days: 90)));
   bool _isDisabled(DateTime d) => _isBefore(d) || _isAfter(d);
 
   bool _isSelected(DateTime d) {
@@ -280,7 +280,7 @@ class _LuxCalendarState extends State<_LuxCalendar> {
         .isBefore(DateTime(_today.year, _today.month + 3));
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding:  EdgeInsets.all(16),
       decoration: BoxDecoration(
           color: AppTheme.card, borderRadius: BorderRadius.circular(16)),
       child: Column(children: [
@@ -291,7 +291,7 @@ class _LuxCalendarState extends State<_LuxCalendar> {
           GestureDetector(
             onTap: canGoPrev ? _prevMonth : null,
             child: Container(
-              padding: const EdgeInsets.all(8),
+              padding:  EdgeInsets.all(8),
               decoration: BoxDecoration(
                   color: canGoPrev ? AppTheme.surface : Colors.transparent,
                   borderRadius: BorderRadius.circular(8)),
@@ -300,7 +300,7 @@ class _LuxCalendarState extends State<_LuxCalendar> {
                   size: 20),
             ),
           ),
-          const Spacer(),
+           Spacer(),
           // Month + Year
           Text(
             DateFormat('MMMM yyyy').format(_focusedMonth),
@@ -309,12 +309,12 @@ class _LuxCalendarState extends State<_LuxCalendar> {
                 fontWeight: FontWeight.w700,
                 color: AppTheme.text1),
           ),
-          const Spacer(),
+           Spacer(),
           // Next
           GestureDetector(
             onTap: canGoNext ? _nextMonth : null,
             child: Container(
-              padding: const EdgeInsets.all(8),
+              padding:  EdgeInsets.all(8),
               decoration: BoxDecoration(
                   color: canGoNext ? AppTheme.surface : Colors.transparent,
                   borderRadius: BorderRadius.circular(8)),
@@ -325,7 +325,7 @@ class _LuxCalendarState extends State<_LuxCalendar> {
           ),
         ]),
 
-        const SizedBox(height: 14),
+         SizedBox(height: 14),
 
         // ── Weekday headers ───────────────────────────────────
         Row(
@@ -344,19 +344,19 @@ class _LuxCalendarState extends State<_LuxCalendar> {
               .toList(),
         ),
 
-        const SizedBox(height: 8),
+         SizedBox(height: 8),
 
         // ── Day grid ──────────────────────────────────────────
         GridView.builder(
           shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          physics:  NeverScrollableScrollPhysics(),
+          gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 7, childAspectRatio: 1.1,
               mainAxisSpacing: 4, crossAxisSpacing: 2),
           itemCount: cells.length,
           itemBuilder: (_, i) {
             final date = cells[i];
-            if (date == null) return const SizedBox.shrink();
+            if (date == null) return  SizedBox.shrink();
 
             final selected = _isSelected(date);
             final today    = _isToday(date);
@@ -369,7 +369,7 @@ class _LuxCalendarState extends State<_LuxCalendar> {
                   .read<AppBloc>()
                   .add(SelectDate(date)),
               child: AnimatedContainer(
-                duration: const Duration(milliseconds: 180),
+                duration:  Duration(milliseconds: 180),
                 decoration: BoxDecoration(
                   color: selected
                       ? AppTheme.primary
@@ -407,9 +407,9 @@ class _LuxCalendarState extends State<_LuxCalendar> {
 
         // ── Selected date summary ─────────────────────────────
         if (widget.selectedDate != null) ...[
-          const SizedBox(height: 12),
+           SizedBox(height: 12),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+            padding:  EdgeInsets.symmetric(horizontal: 14, vertical: 8),
             decoration: BoxDecoration(
                 color: AppTheme.primary.withOpacity(0.12),
                 borderRadius: BorderRadius.circular(10)),
@@ -417,7 +417,7 @@ class _LuxCalendarState extends State<_LuxCalendar> {
                 children: [
                   Icon(Icons.check_circle_rounded,
                       color: AppTheme.primary, size: 14),
-                  const SizedBox(width: 6),
+                   SizedBox(width: 6),
                   Text(
                     DateFormat('EEEE, MMMM d, y').format(widget.selectedDate!),
                     style: GoogleFonts.dmSans(
@@ -443,47 +443,47 @@ class _Step2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
-    padding: const EdgeInsets.all(16),
+    padding:  EdgeInsets.all(16),
     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text('Your Details', style: GoogleFonts.playfairDisplay(
           fontSize: 22, fontWeight: FontWeight.w700, color: AppTheme.text1)),
-      const SizedBox(height: 4),
+       SizedBox(height: 4),
       Text('We\'ll use this to confirm your reservation.',
           style: GoogleFonts.dmSans(fontSize: 13, color: AppTheme.text2)),
-      const SizedBox(height: 24),
+       SizedBox(height: 24),
 
       _label('Full Name'),
-      const SizedBox(height: 6),
+       SizedBox(height: 6),
       TextField(controller: nameCtrl,
           onChanged: (v) => context.read<AppBloc>().add(SetGuestName(v)),
           style: GoogleFonts.dmSans(color: AppTheme.text1),
-          decoration: const InputDecoration(
+          decoration:  InputDecoration(
               hintText: 'Enter your name',
               prefixIcon: Icon(Icons.person_outline_rounded, size: 20, color: AppTheme.text3))),
-      const SizedBox(height: 16),
+       SizedBox(height: 16),
 
       _label('Special Requests (Optional)'),
-      const SizedBox(height: 6),
+       SizedBox(height: 6),
       TextField(controller: reqCtrl, maxLines: 3,
           onChanged: (v) => context.read<AppBloc>().add(SetSpecialRequest(v)),
           style: GoogleFonts.dmSans(color: AppTheme.text1),
-          decoration: const InputDecoration(hintText: 'Allergies, celebrations, dietary needs...')),
-      const SizedBox(height: 24),
+          decoration:  InputDecoration(hintText: 'Allergies, celebrations, dietary needs...')),
+       SizedBox(height: 24),
 
       // Policy note
-      Container(padding: const EdgeInsets.all(14),
+      Container(padding:  EdgeInsets.all(14),
           decoration: BoxDecoration(color: AppTheme.warning.withOpacity(0.08),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: AppTheme.warning.withOpacity(0.3))),
           child: Row(children: [
             Icon(Icons.info_outline_rounded, color: AppTheme.warning, size: 18),
-            const SizedBox(width: 10),
+             SizedBox(width: 10),
             Expanded(child: Text(
                 'Cancellations must be made at least 24 hours in advance to avoid charges.',
                 style: GoogleFonts.dmSans(fontSize: 12, color: AppTheme.warning, height: 1.5))),
           ])),
 
-      const SizedBox(height: 24),
+       SizedBox(height: 24),
       PrimaryBtn(
         label: 'Review Booking',
         icon: Icons.arrow_forward_rounded,
@@ -504,74 +504,74 @@ class _Step3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
-    padding: const EdgeInsets.all(16),
+    padding:  EdgeInsets.all(16),
     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text('Review Summary', style: GoogleFonts.playfairDisplay(
           fontSize: 22, fontWeight: FontWeight.w700, color: AppTheme.text1)),
-      const SizedBox(height: 20),
+       SizedBox(height: 20),
 
       // Restaurant card
-      Container(padding: const EdgeInsets.all(14),
+      Container(padding:  EdgeInsets.all(14),
           decoration: BoxDecoration(color: AppTheme.card, borderRadius: BorderRadius.circular(14)),
           child: Row(children: [
             ClipRRect(borderRadius: BorderRadius.circular(10),
                 child: SizedBox(width: 70, height: 70,
                     child: NetImg(state.selectedRestaurant!.imageUrl))),
-            const SizedBox(width: 12),
+             SizedBox(width: 12),
             Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(state.selectedRestaurant!.name, style: GoogleFonts.playfairDisplay(
                   fontSize: 16, fontWeight: FontWeight.w700, color: AppTheme.text1)),
               Text(state.selectedRestaurant!.location, style: GoogleFonts.dmSans(
                   fontSize: 12, color: AppTheme.text2)),
-              const SizedBox(height: 4),
+               SizedBox(height: 4),
               StarRating(state.selectedRestaurant!.rating, size: 12),
             ])),
           ])),
 
-      const SizedBox(height: 16),
+       SizedBox(height: 16),
 
       // Booking details
-      Container(padding: const EdgeInsets.all(16),
+      Container(padding:  EdgeInsets.all(16),
           decoration: BoxDecoration(color: AppTheme.card, borderRadius: BorderRadius.circular(14)),
           child: Column(children: [
             _row(Icons.calendar_today_rounded, 'Date',
                 DateFormat('EEEE, MMMM d, y').format(state.selectedDate!)),
-            const Divider(color: AppTheme.border, height: 20),
+             Divider(color: AppTheme.border, height: 20),
             _row(Icons.access_time_rounded, 'Time', state.selectedTimeSlot),
-            const Divider(color: AppTheme.border, height: 20),
+             Divider(color: AppTheme.border, height: 20),
             _row(Icons.people_rounded, 'Guests', '${state.selectedGuests} persons'),
-            const Divider(color: AppTheme.border, height: 20),
+             Divider(color: AppTheme.border, height: 20),
             _row(Icons.table_restaurant_outlined, 'Table', state.selectedTableType),
-            const Divider(color: AppTheme.border, height: 20),
+             Divider(color: AppTheme.border, height: 20),
             _row(Icons.person_outline_rounded, 'Name', nameCtrl.text.trim()),
             if (reqCtrl.text.trim().isNotEmpty) ...[
-              const Divider(color: AppTheme.border, height: 20),
+               Divider(color: AppTheme.border, height: 20),
               _row(Icons.notes_rounded, 'Requests', reqCtrl.text.trim()),
             ],
           ])),
 
-      const SizedBox(height: 16),
+       SizedBox(height: 16),
 
       // Price breakdown
-      Container(padding: const EdgeInsets.all(16),
+      Container(padding:  EdgeInsets.all(16),
           decoration: BoxDecoration(color: AppTheme.card, borderRadius: BorderRadius.circular(14)),
           child: Column(children: [
             _row(Icons.receipt_outlined, 'Per person', '\$45.00'),
-            const Divider(color: AppTheme.border, height: 20),
+             Divider(color: AppTheme.border, height: 20),
             _row(Icons.people_rounded, '× ${state.selectedGuests} guests',
                 '\$${(state.selectedGuests * 45).toStringAsFixed(2)}'),
-            const Divider(color: AppTheme.border, height: 20),
+             Divider(color: AppTheme.border, height: 20),
             Row(children: [
               Text('Total', style: GoogleFonts.dmSans(
                   fontSize: 16, fontWeight: FontWeight.w700, color: AppTheme.text1)),
-              const Spacer(),
+               Spacer(),
               Text('\$${(state.selectedGuests * 45).toStringAsFixed(2)}',
-                  style: GoogleFonts.playfairDisplay(
-                      fontSize: 22, fontWeight: FontWeight.w700, color: AppTheme.primary)),
+                  style: GoogleFonts.dmSans(
+                      fontSize: 18, fontWeight: FontWeight.w700, color: AppTheme.primary)),
             ]),
           ])),
 
-      const SizedBox(height: 24),
+       SizedBox(height: 24),
       PrimaryBtn(
         label: 'Confirm Reservation',
         isLoading: state.isSubmitting,
@@ -582,9 +582,9 @@ class _Step3 extends StatelessWidget {
 
   Widget _row(IconData icon, String label, String value) => Row(children: [
     Icon(icon, color: AppTheme.primary, size: 16),
-    const SizedBox(width: 10),
+     SizedBox(width: 10),
     Text(label, style: GoogleFonts.dmSans(fontSize: 13, color: AppTheme.text2)),
-    const Spacer(),
+     Spacer(),
     Flexible(child: Text(value, style: GoogleFonts.dmSans(
         fontSize: 13, fontWeight: FontWeight.w600, color: AppTheme.text1),
         textAlign: TextAlign.right)),
@@ -602,32 +602,32 @@ class BookingSuccessScreen extends StatelessWidget {
       return Scaffold(
         backgroundColor: AppTheme.bg,
         body: SafeArea(child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding:  EdgeInsets.all(24),
           child: Column(children: [
-            const Spacer(),
+             Spacer(),
             // Success animation
             Container(width: 110, height: 110,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  gradient: const LinearGradient(
+                  gradient:  LinearGradient(
                       begin: Alignment.topLeft, end: Alignment.bottomRight,
                       colors: [AppTheme.primary, AppTheme.primaryDk]),
                   boxShadow: [BoxShadow(color: AppTheme.primary.withOpacity(0.4),
                       blurRadius: 32, spreadRadius: 4)],
                 ),
-                child: const Icon(Icons.check_rounded, color: AppTheme.white, size: 56)),
-            const SizedBox(height: 28),
+                child:  Icon(Icons.check_rounded, color: AppTheme.white, size: 56)),
+             SizedBox(height: 28),
             Text('Table Reserved! 🎉', style: GoogleFonts.playfairDisplay(
                 fontSize: 28, fontWeight: FontWeight.w700, color: AppTheme.text1)),
-            const SizedBox(height: 8),
+             SizedBox(height: 8),
             Text('Your reservation is confirmed. We look forward to welcoming you.',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.dmSans(fontSize: 14, color: AppTheme.text2, height: 1.6)),
-            const SizedBox(height: 32),
+             SizedBox(height: 32),
 
             // E-Ticket
             Container(
-              padding: const EdgeInsets.all(20),
+              padding:  EdgeInsets.all(20),
               decoration: BoxDecoration(
                   color: AppTheme.card,
                   borderRadius: BorderRadius.circular(20),
@@ -637,31 +637,31 @@ class BookingSuccessScreen extends StatelessWidget {
                   ClipRRect(borderRadius: BorderRadius.circular(10),
                       child: SizedBox(width: 60, height: 60,
                           child: NetImg(b.restaurantImage))),
-                  const SizedBox(width: 12),
+                   SizedBox(width: 12),
                   Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     Text(b.restaurantName, style: GoogleFonts.dmSans(
                         fontSize: 15, fontWeight: FontWeight.w700, color: AppTheme.text1)),
                     Text(b.tableType, style: GoogleFonts.dmSans(fontSize: 12, color: AppTheme.text2)),
                   ])),
-                  Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  Container(padding:  EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(color: AppTheme.success.withOpacity(0.15),
                           borderRadius: BorderRadius.circular(8)),
                       child: Text('CONFIRMED', style: GoogleFonts.dmSans(
                           fontSize: 9, fontWeight: FontWeight.w800, color: AppTheme.success))),
                 ]),
-                const SizedBox(height: 16),
-                const Divider(color: AppTheme.border),
-                const SizedBox(height: 12),
+                 SizedBox(height: 16),
+                 Divider(color: AppTheme.border),
+                 SizedBox(height: 12),
                 // Dashed separator
                 Row(children: [
                   Text('BOOKING #${b.id.substring(0, 8).toUpperCase()}',
                       style: GoogleFonts.dmSans(fontSize: 10, color: AppTheme.text3,
                           letterSpacing: 1)),
-                  const Spacer(),
+                   Spacer(),
                   Text(DateFormat('MMM d, y').format(b.bookedAt),
                       style: GoogleFonts.dmSans(fontSize: 10, color: AppTheme.text3)),
                 ]),
-                const SizedBox(height: 12),
+                 SizedBox(height: 12),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
                   _ticket(Icons.calendar_today_rounded,
                       DateFormat('EEE, MMM d').format(b.date), 'Date'),
@@ -672,24 +672,24 @@ class BookingSuccessScreen extends StatelessWidget {
                 ]),
               ]),
             ),
-            const Spacer(),
+             Spacer(),
             PrimaryBtn(
               label: 'Back to Home',
               onPressed: () {
-                context.read<AppBloc>().add(const ChangeTab(0));
+                context.read<AppBloc>().add( ChangeTab(0));
                 Navigator.of(context).popUntil((r) => r.isFirst);
               },
             ),
-            const SizedBox(height: 12),
+             SizedBox(height: 12),
             OutlinedButton(
               onPressed: () {
-                context.read<AppBloc>().add(const ChangeTab(2));
+                context.read<AppBloc>().add( ChangeTab(2));
                 Navigator.of(context).popUntil((r) => r.isFirst);
               },
               style: OutlinedButton.styleFrom(
-                  minimumSize: const Size(double.infinity, 50),
+                  minimumSize:  Size(double.infinity, 50),
                   foregroundColor: AppTheme.primary,
-                  side: const BorderSide(color: AppTheme.primary),
+                  side:  BorderSide(color: AppTheme.primary),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14))),
               child: Text('View My Bookings', style: GoogleFonts.dmSans(
                   fontSize: 15, fontWeight: FontWeight.w600)),
@@ -702,7 +702,7 @@ class BookingSuccessScreen extends StatelessWidget {
 
   Widget _ticket(IconData icon, String value, String label) => Column(children: [
     Icon(icon, color: AppTheme.primary, size: 18),
-    const SizedBox(height: 4),
+     SizedBox(height: 4),
     Text(value, style: GoogleFonts.dmSans(
         fontSize: 12, fontWeight: FontWeight.w700, color: AppTheme.text1)),
     Text(label, style: GoogleFonts.dmSans(fontSize: 10, color: AppTheme.text3)),
